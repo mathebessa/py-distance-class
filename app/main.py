@@ -3,7 +3,9 @@ from __future__ import annotations
 
 class Distance:
     def __init__(self, km: int | float) -> None:
-        self.km: int | float = km if isinstance(km, int) or km.is_integer() else float(km)
+        self.km: int | float = (
+            km if isinstance(km, int) or km.is_integer() else float(km)
+        )
 
     def __str__(self) -> str:
         return f"Distance: {self.km} kilometers."
@@ -78,4 +80,3 @@ class Distance:
         if isinstance(other, (int, float)):
             return self.km >= other
         return NotImplemented
-
