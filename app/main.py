@@ -2,8 +2,8 @@ from __future__ import annotations
 
 
 class Distance:
-    def __init__(self, km: int | float) -> None:
-        self.km: float = float(km)
+    def __init__(self, kilometers: int | float) -> None:
+        self.km: float = float(kilometers)
 
     def __str__(self) -> str:
         return f"Distance: {self.km} kilometers."
@@ -27,14 +27,16 @@ class Distance:
             return NotImplemented
         return self
 
-    def __mul__(self, other: int | float) -> Distance:
-        if isinstance(other, (int, float)):
-            return Distance(self.km * other)
+    def __mul__(self, multiplier: int | float) -> Distance:
+        if isinstance(multiplier, (int, float)):
+            return Distance(self.km * multiplier)
         return NotImplemented
 
-    def __truediv__(self, other: int | float) -> Distance:
-        if isinstance(other, (int, float)):
-            return Distance(round(self.km / other, 2))
+    def __truediv__(self, divisor: int | float) -> Distance:
+        if isinstance(divisor, (int, float)):
+            if divisor == 0:
+                raise ZeroDivisionError("division by zero")
+            return Distance(round(self.km / divisor, 2))
         return NotImplemented
 
     def __lt__(self, other: Distance | int | float) -> bool:
