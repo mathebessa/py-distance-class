@@ -3,9 +3,12 @@ from __future__ import annotations
 
 class Distance:
     def __init__(self, km: int | float) -> None:
-        self.km: int | float = (
-            km if isinstance(km, int) or km.is_integer() else float(km)
-        )
+        if isinstance(km, int):
+            self.km = km
+        elif isinstance(km, float):
+            self.km = int(km) if km.is_integer() else km
+        else:
+            raise TypeError("km must be int or float")
 
     def __str__(self) -> str:
         return f"Distance: {self.km} kilometers."
@@ -38,6 +41,9 @@ class Distance:
                 result = int(result)
             return Distance(result)
         return NotImplemented
+
+    def __rmul__(self, other: int | float) -> Distance:
+        return self * other
 
     def __truediv__(self, other: int | float) -> Distance:
         if isinstance(other, (int, float)):
