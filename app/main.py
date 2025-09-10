@@ -3,12 +3,7 @@ from __future__ import annotations
 
 class Distance:
     def __init__(self, km: int | float) -> None:
-        if isinstance(km, int):
-            self.km = km
-        elif isinstance(km, float):
-            self.km = int(km) if km.is_integer() else km
-        else:
-            raise TypeError("km must be int or float")
+        self.km = km
 
     def __str__(self) -> str:
         return f"Distance: {self.km} kilometers."
@@ -26,31 +21,17 @@ class Distance:
     def __iadd__(self, other: Distance | int | float) -> Distance:
         if isinstance(other, Distance):
             self.km += other.km
-        elif isinstance(other, (int, float)):
+            return self
+        if isinstance(other, (int, float)):
             self.km += other
-        else:
-            return NotImplemented
-        if isinstance(self.km, float) and self.km.is_integer():
-            self.km = int(self.km)
-        return self
+            return self
+        return NotImplemented
 
     def __mul__(self, other: int | float) -> Distance:
-        if isinstance(other, (int, float)):
-            result = self.km * other
-            if isinstance(result, float) and result.is_integer():
-                result = int(result)
-            return Distance(result)
-        return NotImplemented
-
-    def __rmul__(self, other: int | float) -> Distance:
-        return self * other
+        return Distance(self.km * other)
 
     def __truediv__(self, other: int | float) -> Distance:
-        if isinstance(other, (int, float)):
-            if other == 0:
-                raise ZeroDivisionError("division by zero")
-            return Distance(round(self.km / other, 2))
-        return NotImplemented
+        return Distance(round(self.km / other, 2))
 
     def __lt__(self, other: Distance | int | float) -> bool:
         if isinstance(other, Distance):
