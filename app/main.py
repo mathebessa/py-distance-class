@@ -3,7 +3,10 @@ class Distance:
         self.km: float = float(km)
 
     def __str__(self) -> str:
-        return f"Distance: {self.km} kilometers.\n"
+        km_str = (
+            str(int(self.km)) if self.km.is_integer() else str(self.km)
+        )
+        return f"Distance: {km_str} kilometers.\n"
 
     def __repr__(self) -> str:
         return f"Distance({self.km})"
